@@ -1,26 +1,28 @@
 import { List } from 'immutable'
 
-export interface Line {
+export interface ILine {
     text: string
 }
 
 export interface IPage {
+    isDirty: boolean
     margin: number
-    lines: List<Line>
+    lines: List<ILine>
 }
 
-export function addLine(page: IPage): IPage {
-    return { ...page, lines: page.lines.push({ text: '' }) }
+export function addLine(page: IPage, lineNumber: number): IPage {
+    return { ...page, lines: page.lines.insert(lineNumber, { text: '' }) }
 }
 
-export function addChar(page: IPage, lineNumber: number, char: string): IPage {
+export function addString(page: IPage, char: string, position: number[]): IPage {
+    const text = page.lines.get(position[0]).text
+    return { ...page, lines: page.lines.set(position[0], { text: text.substring(0, position[1]) + char + text.substring(position[1]) }) }
+}
+
+export function removeChar(page: IPage, lineNumber: number): IPage {
     const text = page.lines.get(lineNumber).text
-    return { ...page, lines: page.lines.set(lineNumber, { text: text + char }) }
-}
-
-export function convertToHtml(page: IPage) {
-    let html = ''
-    const temp = page.lines.map(p => `<div>${p.text === '' ? '<br>' : p.text}</div>`)
-    temp.forEach(p => html += p)
-    return html
+    if (text === "") {
+        return { ...page, lines: page.lines.pop() }
+    }
+    return { ...page, lines: page.lines.set(lineNumber, { text: text.substring(0, text.length - 1) }) }
 }

@@ -1,30 +1,42 @@
 import React, { useState } from "react";
-import { IPage, addChar, convertToHtml, addLine } from "./core/page";
-import { List } from "immutable";
-
-let page: IPage = {
-  margin: 0,
-  lines: List([{ text: "" }])
-};
+import { convertToHtml } from "./core/renderer";
+import {
+  onKeyPress,
+  page,
+  setCursorPosition,
+  cursorPosition
+} from "./core/keypress";
 
 const onkeyup = (event: any) => {
   const t = event.nativeEvent.key;
   const el = document.querySelector("#page1");
-  if (t === "Enter") {
-    page = addLine(page);
-  } else {
-    page = addChar(page, page.lines.count() - 1, t);
-  }
+  onKeyPress(t);
   setTimeout(() => {
     el.innerHTML = convertToHtml(page);
     const range = document.createRange();
     const sel = window.getSelection();
-
-    range.setStart(el.childNodes[page.lines.count() - 1], 1);
-    range.collapse(true);
+    console.log(cursorPosition);
+    range.setStart(
+      el.childNodes[cursorPosition[0]].firstChild,
+      cursorPosition[1]
+    );
+    range.collapse(false);
     sel.removeAllRanges();
     sel.addRange(range);
   }, 0);
+};
+
+const onClick = () => {
+  const selection = window.getSelection();
+  const el = document.querySelector("#page1");
+  const child = el.childNodes;
+  let c = 0;
+  for (let i = 0; i < child.length; i++) {
+    if (selection.anchorNode.parentNode.isSameNode(child[i])) {
+      c = i;
+    }
+  }
+  setCursorPosition(c, selection.anchorOffset);
 };
 
 export const Page = () => {
@@ -35,6 +47,7 @@ export const Page = () => {
         className="editable"
         contentEditable={true}
         onKeyDown={onkeyup}
+        onClick={onClick}
         dangerouslySetInnerHTML={{ __html: "<div><br></div>" }}
       />
     </div>
