@@ -9,13 +9,15 @@ export let page: IPage = {
 
 export let cursorPosition: number[] = [0, 0]
 
+
 export const onKeyPress = (char: string) => {
+    console.log(char)
+
     if (char.length === 1) {
         page = addString(page, char, cursorPosition);
         cursorPosition = [cursorPosition[0], cursorPosition[1] + 1]
         return
     }
-    console.log(char)
 
     switch (char) {
         case "Enter":

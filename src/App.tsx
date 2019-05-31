@@ -1,12 +1,13 @@
 import React from "react";
-import logo from "./logo.svg";
+
 import "./App.css";
-import { Page } from "./Page";
+
+import { Pages } from "./Pages";
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Page />
+      <Pages />
     </div>
   );
 };
