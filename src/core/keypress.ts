@@ -1,4 +1,4 @@
-import { IPage, addString, addLine, removeChar } from "./page";
+import { IPage, addString, addLine, removeChar, exchangeLines } from "./page";
 import { List } from "immutable";
 
 export let page: IPage = {
@@ -10,12 +10,17 @@ export let page: IPage = {
 export let cursorPosition: number[] = [0, 0]
 
 
-export const onKeyPress = (char: string) => {
+export const onKeyPress = (char: string, alt: boolean) => {
     console.log(char)
+
+    if(alt && char === 'ArrowUp') {
+        page = exchangeLines(page, 1, 0)
+        setCursorPosition(cursorPosition[0] - 1, cursorPosition[1])
+    }
 
     if (char.length === 1) {
         page = addString(page, char, cursorPosition);
-        cursorPosition = [cursorPosition[0], cursorPosition[1] + 1]
+        setCursorPosition(cursorPosition[0], cursorPosition[1] + 1)
         return
     }
 
@@ -25,10 +30,29 @@ export const onKeyPress = (char: string) => {
             page = addLine(page, cursorPosition[0])
             break;
         case "Backspace":
-            page = removeChar(page, page.lines.count() - 1)
-            cursorPosition = [cursorPosition[0], cursorPosition[1] - 1]
+            onBackspace()
             break;
     }
+}
+
+export const onBackspace = () => {
+    page = removeChar(page, page.lines.count() - 1)
+    let x = cursorPosition[1] - 1
+    let y = cursorPosition[0]
+
+    if(x < 0) {
+        if( y-1 < 0) {
+            x = 0
+            y = 0
+        } else {
+            x = page.lines.last({text: ''}).text.length
+            y--
+        }
+    }
+
+
+    // console.log(y,x)
+    setCursorPosition(y >= 0 ? y : 0, x)
 }
 
 export const setCursorPosition = (top: number, left: number) => {

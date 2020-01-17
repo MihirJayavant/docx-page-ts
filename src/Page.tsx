@@ -7,22 +7,24 @@ import {
   cursorPosition
 } from "./core/keypress";
 
-const onkeyup = (event: any) => {
+const onkeyDown = (event: any) => {
   const t = event.nativeEvent.key;
   const el = document.querySelector("#page1");
-  onKeyPress(t);
+  console.log(event.altKey);
+  onKeyPress(t, event.altKey);
   setTimeout(() => {
     el.innerHTML = convertToHtml(page);
     const range = document.createRange();
     const sel = window.getSelection();
-    console.log(cursorPosition);
-    range.setStart(
-      el.childNodes[cursorPosition[0]].firstChild,
-      cursorPosition[1]
-    );
-    range.collapse(false);
-    sel.removeAllRanges();
-    sel.addRange(range);
+    if(el.childNodes[cursorPosition[0]]) {
+      range.setStart(
+        el.childNodes[cursorPosition[0]].firstChild,
+        cursorPosition[1]
+      );
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
   }, 0);
 };
 
@@ -46,7 +48,7 @@ export const Page = () => {
         id="page1"
         className="editable"
         contentEditable={true}
-        onKeyDown={onkeyup}
+        onKeyDown={onkeyDown}
         onClick={onClick}
         dangerouslySetInnerHTML={{ __html: "<div><br></div>" }}
       />

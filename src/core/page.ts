@@ -26,3 +26,14 @@ export function removeChar(page: IPage, lineNumber: number): IPage {
     }
     return { ...page, lines: page.lines.set(lineNumber, { text: text.substring(0, text.length - 1) }) }
 }
+
+export function exchangeLines(page: IPage, i: number, j): IPage {
+    if(page.lines.count() >= 2 && i > 0) {
+        const temp1 = page.lines.get(i)
+        const temp2 = page.lines.get(j)
+        return {
+            ...page,
+            lines: page.lines.set(i, temp2).set(j, temp1)
+        }
+    }
+}

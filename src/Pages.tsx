@@ -12,8 +12,8 @@ export const Pages = () => {
 
   return (
     <div className="pages">
-      {store.pages.map(p => (
-        <Page />
+      {store.pages.map((p, i) => (
+        <Page key={i}/>
       ))}
     </div>
   );
