@@ -55,3 +55,20 @@ export function updateElement(
     }
   }
 }
+
+export function updateElementAsync(
+  $parent: ChildNode,
+  newNode: INode,
+  oldNode: INode,
+  index = 0
+) {
+  return new Promise<any>((res, err) => {
+    updateElement($parent, newNode, oldNode, index)
+  })
+}
+
+export function createElementAsync(node: INode) {
+  return new Promise<HTMLElement | Text>((res, err) => {
+    res(createElement(node))
+  })
+}

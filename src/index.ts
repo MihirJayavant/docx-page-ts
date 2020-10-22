@@ -1,5 +1,5 @@
 import { ElementType, IElement, INode } from "./core/Element";
-import { createElement, updateElement } from "./core/Renderer";
+import { createElementAsync, updateElementAsync } from "./core/Renderer";
 
 // Write TypeScript code!
 const page1 = document.getElementById("firstpage")!;
@@ -37,10 +37,14 @@ const data2: INode = {
   ]
 };
 
+function CreateDom() {
+  createElementAsync(data)
+    .then(p => page1.appendChild(p))
+}
 
-page1.appendChild(createElement(data));
+CreateDom()
 
-btn!.addEventListener("click", () => {
+btn.addEventListener("click", () => {
   const root = document.getElementById("firstpage")!;
-  updateElement(root, data2, data);
+  updateElementAsync(root, data2, data);
 });
