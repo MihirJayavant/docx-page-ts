@@ -1,11 +1,14 @@
 {
+  "exclude": ["node_modules", "**/*.spec.ts"],
     "compilerOptions": {
       "baseUrl": "./src",
       "paths": {
-        "~*": ["./*"]
+        "~/*": ["./*"]
       },
       "strict": true,
       "module": "ES2015",
+      "target": "ES2017",
+      "lib": ["es2018", "DOM"]
     },
     "include": ["src/**/*"]
   }
