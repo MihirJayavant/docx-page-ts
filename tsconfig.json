@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+        "~*": ["./*"]
+      },
+      "strict": true,
+      "module": "ES2015",
+    },
+    "include": ["src/**/*"]
+  }

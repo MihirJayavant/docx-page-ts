@@ -1,0 +1,12 @@
+body {
+  background-color: whitesmoke;
+}
+
+.page {
+  background-color: white;
+  width: 400px;
+  height: 500px;
+  margin: 10px;
+  box-shadow: 5px 5px 5px #aaaaaa;
+  border-radius: 5px;
+}
