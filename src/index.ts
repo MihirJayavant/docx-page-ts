@@ -1,4 +1,4 @@
-import { IElement } from "./core/Element";
+import { ElementType, IElement, INode } from "./core/Element";
 import { createElement, updateElement } from "./core/Renderer";
 
 // Write TypeScript code!
@@ -6,24 +6,38 @@ const page1 = document.getElementById("firstpage")!;
 const btn = document.getElementById("changeBtn")!;
 
 const data: IElement = {
-  type: "div",
+  elementType: ElementType.ElementNode,
+  type: "ul",
   props: { class: "list" },
   children: [
-    { type: "p", props: {}, children: ["item 1"] },
-    { type: "p", props: {}, children: ["item 2"] }
+    {
+      elementType: ElementType.ElementNode, type: "li", props: {},
+      children: [{ elementType: ElementType.TextNode, value: "item 1" }]
+    },
+    {
+      elementType: ElementType.ElementNode, type: "li", props: {},
+      children: [{ elementType: ElementType.TextNode, value: "item 2" }]
+    }
   ]
 };
 
-const data2: IElement = {
-  type: "div",
+const data2: INode = {
+  elementType: ElementType.ElementNode,
+  type: "ul",
   props: { class: "list" },
   children: [
-    { type: "p", props: {}, children: ["item 1"] },
-    { type: "p", props: {}, children: ["Hello"] }
+    {
+      elementType: ElementType.ElementNode, type: "li", props: {},
+      children: [{ elementType: ElementType.TextNode, value: "item 45" }]
+    },
+    {
+      elementType: ElementType.ElementNode, type: "li", props: {},
+      children: [{ elementType: ElementType.TextNode, value: "Hello" }]
+    }
   ]
 };
 
-page1.removeChild(page1!.childNodes[0]);
+
 page1.appendChild(createElement(data));
 
 btn!.addEventListener("click", () => {
