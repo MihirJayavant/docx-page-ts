@@ -7,32 +7,23 @@ const btn = document.getElementById("changeBtn")!;
 
 const data: IElement = {
   elementType: ElementType.ElementNode,
-  type: "ul",
-  props: { class: "list" },
+  type: "div",
+  props: {},
   children: [
     {
-      elementType: ElementType.ElementNode, type: "li", props: {},
-      children: [{ elementType: ElementType.TextNode, value: "item 1" }]
+      elementType: ElementType.ElementNode, type: "div", props: {},
+      children: [{ elementType: ElementType.TextNode, value: "This pic" }]
     },
     {
-      elementType: ElementType.ElementNode, type: "li", props: {},
-      children: [{ elementType: ElementType.TextNode, value: "item 2" }]
-    }
-  ]
-};
-
-const data2: INode = {
-  elementType: ElementType.ElementNode,
-  type: "ul",
-  props: { class: "list" },
-  children: [
-    {
-      elementType: ElementType.ElementNode, type: "li", props: {},
-      children: [{ elementType: ElementType.TextNode, value: "item 45" }]
+      elementType: ElementType.ElementNode, type: "br", props: {},
+      children: []
     },
     {
-      elementType: ElementType.ElementNode, type: "li", props: {},
-      children: [{ elementType: ElementType.TextNode, value: "Hello" }]
+      elementType: ElementType.ElementNode, type: "img", props: {
+        src: 'https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fspecials-images.forbesimg.com%2Fdam%2Fimageserve%2F765877054%2F960x0.jpg%3Ffit%3Dscale',
+        'class': 'rectangle'
+      },
+      children: []
     }
   ]
 };
@@ -45,6 +36,5 @@ function CreateDom() {
 CreateDom()
 
 btn.addEventListener("click", () => {
-  const root = document.getElementById("firstpage")!;
-  updateElementAsync(root, data2, data);
+
 });

@@ -6,8 +6,19 @@ export function createElement(node: INode) {
   }
 
   const $el = document.createElement(node.type);
+  setProps($el, node.props);
   node.children.map(createElement).forEach($el.appendChild.bind($el));
   return $el;
+}
+
+function setProp($target: HTMLElement, name: string, value: string) {
+  $target.setAttribute(name, value);
+}
+
+function setProps($target: HTMLElement, props: any) {
+  Object.keys(props).forEach(name => {
+    setProp($target, name, props[name]);
+  });
 }
 
 function isElement(node: INode): node is IElement {
